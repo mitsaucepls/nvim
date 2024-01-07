@@ -61,5 +61,16 @@ return require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'},
 		}
 	}
+    
+    use {
+        'rcarriga/nvim-dap-ui',
+        requires = {'mfussenegger/nvim-dap'}
+    }
+
+    use 'theHamsta/nvim-dap-virtual-text'
+    use 'leoluz/nvim-dap-go'
+    require('dapui').setup()
+    require('dap-go').setup()
+    require('nvim-dap-virtual-text').setup()
 
 end)
