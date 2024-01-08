@@ -48,3 +48,4 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 
 vim.api.nvim_command('autocmd TextYankPost * silent! lua vim.highlight.on_yank()')
+vim.api.nvim_set_keymap('n', '<C-c>', '<C-a>', {noremap = true, silent = true})
