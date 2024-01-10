@@ -1,2 +1,2 @@
-nvim.log
-plugin/packer_compiled.lua
+*.log
+plugin/
