@@ -81,6 +81,8 @@ return require('packer').startup(function(use)
     require('dapui').setup()
     require('dap-go').setup()
     require('nvim-dap-virtual-text').setup()
+    require('git-worktree').setup()
+    require('telescope').load_extension('git_worktree')
 
     use 'ThePrimeagen/git-worktree.nvim'
 end)
