@@ -73,4 +73,5 @@ return require('packer').startup(function(use)
     require('dap-go').setup()
     require('nvim-dap-virtual-text').setup()
 
+    use 'ThePrimeagen/git-worktree.nvim'
 end)
