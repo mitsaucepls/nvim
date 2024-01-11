@@ -1,2 +1,2 @@
 *.log
-plugin/
+plugin/packer_compiled.lua
