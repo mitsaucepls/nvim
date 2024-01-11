@@ -70,7 +70,7 @@ return require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'},
 		}
 	}
-    
+
     use {
         'rcarriga/nvim-dap-ui',
         requires = {'mfussenegger/nvim-dap'}
