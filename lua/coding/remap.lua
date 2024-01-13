@@ -39,7 +39,7 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/coding/packer.lua<CR>");
+vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/coding/lazy_init.lua<CR>");
 -- have not figured that out
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 
@@ -49,3 +49,6 @@ end)
 
 vim.api.nvim_command('autocmd TextYankPost * silent! lua vim.highlight.on_yank()')
 vim.api.nvim_set_keymap('n', '<C-c>', '<C-a>', {noremap = true, silent = true})
+
+vim.api.nvim_set_hl(0, "Normal", {bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
