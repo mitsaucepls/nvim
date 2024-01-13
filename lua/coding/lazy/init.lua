@@ -1,16 +1,11 @@
 return {
-
-
-    {
-        'nvim-lua/plenary.nvim',
-    },
-
+    -- TPOPE
     'tpope/vim-surround',
     "tpope/vim-commentary",
     "tpope/vim-repeat",
+    -- other cool shit
     'ThePrimeagen/vim-be-good',
     'github/copilot.vim',
-
     -- I actually dont know those
     'nvim-lua/popup.nvim',
     'nvim-telescope/telescope-fzy-native.nvim',
