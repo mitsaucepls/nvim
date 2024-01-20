@@ -22,7 +22,7 @@ local function jdtls_config()
                         import = { exclusions = "target/*" },
                     }
                 },
-                -- root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
+                root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
             })
         end,
     })
@@ -44,6 +44,8 @@ local function nvim_lsp_config()
             "tsserver",
             "gopls",
             "yamlls",
+            "jdtls",
+            "pyright",
         },
         handlers = {
             function(server_name)
@@ -73,6 +75,25 @@ local function nvim_lsp_config()
                             }
                         }
                     }
+                }
+            end,
+            ["pyright"] = function()
+                local lspconfig = require("lspconfig")
+                lspconfig.pyright.setup {
+                    -- on_attach = on_attach,
+                    settings = {
+                        pyright = {
+                            autoImportCompletion = true,
+                        },
+                        python = {
+                            analysis = {
+                                autoSearchPaths = true,
+                                diagnosticMode = 'openFilesOnly',
+                                useLibraryCodeForTypes = true,
+                                typeCheckingMode = 'off',
+                            }
+                        }
+                    },
                 }
             end,
         }
