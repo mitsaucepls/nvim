@@ -90,7 +90,7 @@ local function nvim_lsp_config()
                                 autoSearchPaths = true,
                                 diagnosticMode = 'openFilesOnly',
                                 useLibraryCodeForTypes = true,
-                                typeCheckingMode = 'off',
+                                typeCheckingMode = 'basic',
                             }
                         }
                     },
@@ -130,6 +130,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
         -- setup for formatting modifications on save
+        -- idk why, but this fails sometimes (occured on python code)
         local augroup_id = vim.api.nvim_create_augroup(
             "FormatModificationsDocumentFormattingGroup",
             { clear = false }

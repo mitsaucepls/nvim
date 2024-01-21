@@ -5,7 +5,7 @@ return {
     "tpope/vim-repeat",
     -- other cool shit
     'ThePrimeagen/vim-be-good',
-    'github/copilot.vim',
+    -- 'github/copilot.vim',
     -- I actually dont know those
     'nvim-lua/popup.nvim',
     'nvim-telescope/telescope-fzy-native.nvim',
