@@ -46,6 +46,7 @@ local function nvim_lsp_config()
             "yamlls",
             "jdtls",
             "pyright",
+            "debugpy",
         },
         handlers = {
             function(server_name)
@@ -118,16 +119,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local client = vim.lsp.get_client_by_id(e.data.client_id)
         local buffer = e.buf
 
+        vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
         vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
         vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+        -- vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
         -- vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         -- vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-        vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-        vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-        vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+        -- vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+        vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
+        vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
+        -- vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
         -- setup for formatting modifications on save
         -- idk why, but this fails sometimes (occured on python code)
@@ -147,6 +149,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
             ),
             buffer = buffer,
             callback = function()
+                -- check if lsp has the capability to format on save
+                if not client.server_capabilities.document_formatting then
+                    return
+                end
+
                 local result = require("lsp-format-modifications")
                     .format_modifications(client, buffer)
                 -- this will fall back to format the entire buffer

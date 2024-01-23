@@ -9,6 +9,10 @@ function ColorMyPencils(color)
 
 end
 
+-- make spaces and tabs visible
+vim.opt.list = true
+vim.opt.listchars = "tab:→\\x20,space:·"
+
 return {
     {
         'folke/tokyonight.nvim',
@@ -39,4 +43,14 @@ return {
         end
     },
 
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {
+            indent = {
+                char = "▏",
+            },
+            scope = { enabled = false },
+        },
+    },
 }
