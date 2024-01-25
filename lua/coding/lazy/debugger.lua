@@ -19,7 +19,7 @@ return {
             end
 
             vim.api.nvim_set_keymap("n", "<leader>@t", "<CMD> lua require('dapui').toggle() <CR>", {noremap=true})
-            vim.api.nvim_set_keymap("n", "<leader>@b", "<CMD> DapToggleBreaktpoint <CR>", {noremap=true})
+            vim.api.nvim_set_keymap("n", "<leader>@b", "<CMD> DapToggleBreakpoint <CR>", {noremap=true})
             vim.api.nvim_set_keymap("n", "<leader>@c", "<CMD> DapContinue<CR>", {noremap=true})
             vim.api.nvim_set_keymap("n", "<leader>@r", "<CMD> lua require('dapui').open({reset = true})<CR>", {noremap=true})
         end,

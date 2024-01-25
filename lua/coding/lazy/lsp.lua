@@ -46,7 +46,6 @@ local function nvim_lsp_config()
             "yamlls",
             "jdtls",
             "pyright",
-            "debugpy",
         },
         handlers = {
             function(server_name)

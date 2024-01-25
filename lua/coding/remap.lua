@@ -47,6 +47,8 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
+vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+
 vim.api.nvim_command('autocmd TextYankPost * silent! lua vim.highlight.on_yank()')
 vim.api.nvim_set_keymap('n', '<C-c>', '<C-a>', {noremap = true, silent = true})
 
