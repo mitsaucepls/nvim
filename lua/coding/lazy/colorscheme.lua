@@ -1,14 +1,3 @@
-function ColorMyPencils(color)
-
-
-    vim.api.nvim_set_hl(0, "Normal", {bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-
-    color = color or "rose-pine"
-    vim.cmd.colorscheme(color)
-
-end
-
 -- make spaces and tabs visible
 vim.opt.list = true
 vim.opt.listchars = "tab:→\\x20,space:·"
@@ -16,6 +5,8 @@ vim.opt.listchars = "tab:→\\x20,space:·"
 return {
     {
         'folke/tokyonight.nvim',
+        lazy = false,
+        priority = 1000,
         config = function()
             require("tokyonight").setup({
                 style = "storm",
@@ -24,22 +15,11 @@ return {
                 styles = {
                     comments = { italic = false },
                     keywords = { italic = false },
-                    sidebars = "dark",
-                    floats = "dark",
+                    sidebars = "transparent",
+                    floats = "transparent",
                 },
             })
-        end
-    },
-
-    {
-        'rose-pine/neovim',
-        name = 'rose-pine',
-        config = function()
-            vim.cmd('colorscheme rose-pine')
-            require('rose-pine').setup({
-                disable_background = true
-            })
-            ColorMyPencils()
+            vim.cmd.colorscheme("tokyonight")
         end
     },
 
