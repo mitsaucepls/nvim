@@ -29,6 +29,7 @@ local function jdtls_config()
 end
 
 local function nvim_lsp_config()
+    vim.filetype.add({ extension = { templ = "templ" } })
     local capabilities = vim.tbl_deep_extend(
         "force",
         {},
@@ -50,6 +51,8 @@ local function nvim_lsp_config()
         handlers = {
             function(server_name)
                 require("lspconfig")[server_name].setup {
+                    -- dk about this
+                    -- on_attach = on_attach,
                     capabilities = capabilities
                 }
             end,
@@ -71,7 +74,7 @@ local function nvim_lsp_config()
                                 library = vim.api.nvim_get_runtime_file("", true)
                             },
                             diagnostics = {
-                                globals = { "vim", "silent" }
+                                globals = { "vim", "silent", "on_attach" },
                             }
                         }
                     }
@@ -80,7 +83,6 @@ local function nvim_lsp_config()
             ["pyright"] = function()
                 local lspconfig = require("lspconfig")
                 lspconfig.pyright.setup {
-                    -- on_attach = on_attach,
                     settings = {
                         pyright = {
                             autoImportCompletion = true,
@@ -96,6 +98,19 @@ local function nvim_lsp_config()
                     },
                 }
             end,
+            ["htmx"] = function ()
+                local lspconfig = require("lspconfig")
+                lspconfig.htmx.setup {
+                    filetypes = { "html" , "templ" },
+                }
+            end,
+            ["html"] = function ()
+                local lspconfig = require("lspconfig")
+                lspconfig.html.setup {
+                    filetypes = { "html" , "templ" },
+                }
+            end,
+
         }
     })
 
