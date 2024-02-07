@@ -18,6 +18,7 @@ return {
             ["json"] = true,
             ["xml"] = true,
             ["templ"] = true,
+            ["dockerfile"] = true,
         }
         -- print(vim.inspect(vim.g.copilot_filetypes))
     end,
