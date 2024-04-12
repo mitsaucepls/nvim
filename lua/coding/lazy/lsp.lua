@@ -44,7 +44,6 @@ local function nvim_lsp_config()
             "rust_analyzer",
             "tsserver",
             "gopls",
-            "yamlls",
             "jdtls",
             "pyright",
         },
