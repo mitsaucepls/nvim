@@ -1,41 +1,38 @@
-local function jdtls_config()
-    local jdtls_mason_path = "/home/a200162459/.local/share/nvim/mason/bin/jdtls"
-    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-    local jdtls_cache_dir = "/home/a200162459/.cache/jdtls/"
-    local workspace_dir = jdtls_cache_dir .. "/workspace/" .. project_name
-    local config_dir = jdtls_cache_dir .. "/config/"
+-- local function jdtls_config()
+--     local jdtls_mason_path = "/home/a200162459/.local/share/nvim/mason/bin/jdtls"
+--     local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+--     local jdtls_cache_dir = "/home/a200162459/.cache/jdtls/"
+--     local workspace_dir = jdtls_cache_dir .. "/workspace/" .. project_name
+--     local config_dir = jdtls_cache_dir .. "/config/"
 
-    vim.api.nvim_create_autocmd('FileType', {
-        pattern = "java",
-        group = vim.api.nvim_create_augroup('JdtlsAttach', {}),
-        callback = function(_)
-            require("jdtls").start_or_attach({
-                cmd = {
-                    jdtls_mason_path,
-                    "-configuration", config_dir,
-                    "-data", workspace_dir,
-                    "--jvm-arg=-javaagent:/home/a200162459/.local/share/java/lombok.jar"
-                },
-                settings = {
-                    java = {
-                        saveActions = { organizeImports = true },
-                        import = { exclusions = "target/*" },
-                    }
-                },
-                root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
-            })
-        end,
-    })
-end
+--     vim.api.nvim_create_autocmd('FileType', {
+--         pattern = "java",
+--         group = vim.api.nvim_create_augroup('JdtlsAttach', {}),
+--         callback = function(_)
+--             require("jdtls").start_or_attach({
+--                 cmd = {
+--                     jdtls_mason_path,
+--                     "-configuration", config_dir,
+--                     "-data", workspace_dir,
+--                     "--jvm-arg=-javaagent:/home/a200162459/.local/share/java/lombok.jar"
+--                 },
+--                 settings = {
+--                     java = {
+--                         saveActions = { organizeImports = true },
+--                         import = { exclusions = "target/*" },
+--                     }
+--                 },
+--                 root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
+--             })
+--         end,
+--     })
+-- end
 
+local CMP_ELLIPSIS_CHAR = '…'
+local CMP_ABBR_LENGTH = 25
+local CMP_MENU_LENGTH = 40
 local function nvim_lsp_config()
     vim.filetype.add({ extension = { templ = "templ" } })
-    local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities()
-    )
 
     -- require("fidget").setup({})
     require("mason-lspconfig").setup({
@@ -50,9 +47,12 @@ local function nvim_lsp_config()
         handlers = {
             function(server_name)
                 require("lspconfig")[server_name].setup {
-                    -- dk about this
-                    -- on_attach = on_attach,
-                    capabilities = capabilities
+                    capabilities = vim.tbl_deep_extend(
+                        "force",
+                        {},
+                        vim.lsp.protocol.make_client_capabilities(),
+                        require("cmp_nvim_lsp").default_capabilities()
+                    )
                 }
             end,
 
@@ -124,7 +124,65 @@ local function nvim_lsp_config()
             prefix = "",
         },
     })
+
+    local cmp = require("cmp")
+    local cmp_select = {behavior = cmp.SelectBehavior.Select}
+    cmp.setup({
+        snippet = {
+            expand = function(args)
+                require('luasnip').lsp_expand(args.body)
+            end
+        },
+        view = { docs = { auto_open = true } },
+        formatting = {
+            fields = { "kind", "abbr", "menu" },
+            -- responsible for abbreviating entries so the window doesn't get too long
+            format = function(_, cmp_item)
+                if cmp_item.abbr ~= nil and string.len(cmp_item.abbr) > CMP_ABBR_LENGTH then
+                    cmp_item.abbr = vim.fn.strcharpart(cmp_item.abbr, 0, CMP_ABBR_LENGTH) .. CMP_ELLIPSIS_CHAR
+                end
+                if cmp_item.menu ~= nil and string.len(cmp_item.menu) > CMP_MENU_LENGTH then
+                    cmp_item.menu = vim.fn.strcharpart(cmp_item.menu, 0, CMP_MENU_LENGTH) .. CMP_ELLIPSIS_CHAR
+                end
+                return cmp_item
+            end,
+        },
+
+        mapping = cmp.mapping.preset.insert({
+            ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+            ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            ['<C-Space>'] = cmp.mapping.complete(),
+        }),
+        sources = cmp.config.sources({
+            { name = "nvim_lsp", group_index = 1 },
+            { name = "luasnip",  group_index = 1 },
+            { name = "buffer",   group_index = 1 },
+            { name = "path",     group_index = 1 },
+        }),
+    })
+
+    -- cmp-commandline for completing "/" search from buffer
+    cmp.setup.cmdline({"/", "?"},{
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+            { name = "buffer" },
+        })
+    })
+
+    -- cmp-commandline for completing ":" commands
+    cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+            { name = "path" },
+            {
+                name = "cmdline",
+                option = { ignore_cmds = { "Man", "!" } },
+            },
+        })
+    })
 end
+
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(e)
@@ -204,15 +262,21 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             "williamboman/mason-lspconfig.nvim",
-            -- "j-hui/fidget.nvim",
+            'hrsh7th/nvim-cmp',
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "saadparwaiz1/cmp_luasnip",
+            "L3MON4D3/LuaSnip",
         },
         config = nvim_lsp_config
     },
-    {
-        "mfussenegger/nvim-jdtls",
-        dependencies = { "nvim-lspconfig" },
-        lazy = true,
-        ft = "java",
-        config = jdtls_config,
-    },
+    -- {
+    --     "mfussenegger/nvim-jdtls",
+    --     dependencies = { "nvim-lspconfig" },
+    --     lazy = true,
+    --     ft = "java",
+    --     config = jdtls_config,
+    -- },
 }

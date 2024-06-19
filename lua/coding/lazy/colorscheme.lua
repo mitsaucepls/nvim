@@ -23,6 +23,9 @@ return {
             vim.api.nvim_set_hl(0, 'LineNrAbove', { bold=true })
             vim.api.nvim_set_hl(0, 'LineNr', { bold=true })
             vim.api.nvim_set_hl(0, 'LineNrBelow', { bold=true })
+            vim.api.nvim_set_hl(0, 'Comment', { bold=true })
+            -- Set the initial highlight for CursorLine
+            vim.api.nvim_set_hl(0, "CursorLine", {default=true, blend=50})
         end
     },
 
