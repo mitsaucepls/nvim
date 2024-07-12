@@ -109,9 +109,11 @@ local function nvim_lsp_config()
                     filetypes = { "html" , "templ" },
                 }
             end,
-
         }
     })
+
+    local lspconfig = require('lspconfig')
+    lspconfig.dartls.setup { }
 
     vim.diagnostic.config({
         update_in_insert = true,
