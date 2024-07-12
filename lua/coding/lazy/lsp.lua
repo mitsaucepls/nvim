@@ -34,7 +34,6 @@ local CMP_MENU_LENGTH = 40
 local function nvim_lsp_config()
     vim.filetype.add({ extension = { templ = "templ" } })
 
-    -- require("fidget").setup({})
     require("mason-lspconfig").setup({
         ensure_installed = {
             "lua_ls",
@@ -92,6 +91,7 @@ local function nvim_lsp_config()
                                 diagnosticMode = 'openFilesOnly',
                                 useLibraryCodeForTypes = true,
                                 typeCheckingMode = 'basic',
+                                autoImportCompletion = true,
                             }
                         }
                     },
@@ -249,16 +249,16 @@ return {
         config = true,
     },
     {
-        "williamboman/mason-lspconfig.nvim",
-        name = "mason-lspconfig",
-        dependencies = { "mason" },
-        config = true,
-    },
-    {
         "joechrisellis/lsp-format-modifications.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        name = "mason-lspconfig",
+        dependencies = { "mason" },
+        config = true,
     },
     {
         "neovim/nvim-lspconfig",
@@ -271,8 +271,19 @@ return {
             "hrsh7th/cmp-cmdline",
             "saadparwaiz1/cmp_luasnip",
             "L3MON4D3/LuaSnip",
+            "j-hui/fidget.nvim",
         },
         config = nvim_lsp_config
+    },
+    {
+        "j-hui/fidget.nvim",
+        opts = {
+            notification = {
+                window = {
+                    winblend = 0,
+                },
+            }
+        }
     },
     -- {
     --     "mfussenegger/nvim-jdtls",
