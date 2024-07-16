@@ -49,6 +49,14 @@ return {
                 end,
                 on_highlights = function(hl, c)
                     hl.Normal = { fg = c.white }
+                    hl.NormalFloat = { fg = c.white }
+                    hl.NormalNC = { fg = c.white }
+                    hl.NormalSB = { fg = c.white }
+                    hl.FloatBorder = { fg = c.white }
+                    hl.FloatTitle = { fg = c.white }
+                    hl.LspFloatWinNormal = { bg = c.white }
+                    hl.LspFloatWinNormal = { bg = c.white }
+                    hl.NvimTreeNormal = { bg = c.white }
                     hl["@attribute"] = { fg = c.cyan }
                     hl["@boolean"] = { fg = c.orange }
                     hl["@character"] = { fg = c.green }
@@ -135,6 +143,11 @@ return {
                     hl["@variable.builtin"] = { fg = c.purple }
                     hl["@variable.global"] = { fg = c.aqua }
                     hl["@variable.parameter"] = { fg = c.yellow }
+                    hl.TelescopeBorder = { fg = c.cyan }
+                    hl.TelescopeNormal = { fg = c.white }
+                    hl.TelescopePromptBorder = { fg = c.orange }
+                    hl.TelescopePromptTitle = { fg = c.orange }
+                    hl.TelescopeResultsComment = { fg = c.gray0 }
                 end,
             })
             vim.cmd.colorscheme("tokyonight")
