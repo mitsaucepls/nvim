@@ -1,5 +1,6 @@
 require("coding.remap")
 require("coding.set")
+require("coding.indentation")
 require("coding.lazy_init")
 -- windows only
 -- require("coding.config")
