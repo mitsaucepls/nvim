@@ -48,7 +48,7 @@ return {
                     colors.gray0 = "#111111"
                 end,
                 on_highlights = function(hl, c)
-                    hl.Normal = { fg = c.white, bg = c.gray0 }
+                    hl.Normal = { fg = c.white }
                     hl["@attribute"] = { fg = c.cyan }
                     hl["@boolean"] = { fg = c.orange }
                     hl["@character"] = { fg = c.green }
