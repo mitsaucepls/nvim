@@ -1,32 +1,32 @@
--- local function jdtls_config()
---     local jdtls_mason_path = "/home/a200162459/.local/share/nvim/mason/bin/jdtls"
---     local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
---     local jdtls_cache_dir = "/home/a200162459/.cache/jdtls/"
---     local workspace_dir = jdtls_cache_dir .. "/workspace/" .. project_name
---     local config_dir = jdtls_cache_dir .. "/config/"
+local function jdtls_config()
+    local jdtls_mason_path = "~/.local/share/nvim/mason/bin/jdtls"
+    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+    local jdtls_cache_dir = "~/.cache/jdtls/"
+    local workspace_dir = jdtls_cache_dir .. "/workspace/" .. project_name
+    local config_dir = jdtls_cache_dir .. "/config/"
 
---     vim.api.nvim_create_autocmd('FileType', {
---         pattern = "java",
---         group = vim.api.nvim_create_augroup('JdtlsAttach', {}),
---         callback = function(_)
---             require("jdtls").start_or_attach({
---                 cmd = {
---                     jdtls_mason_path,
---                     "-configuration", config_dir,
---                     "-data", workspace_dir,
---                     "--jvm-arg=-javaagent:/home/a200162459/.local/share/java/lombok.jar"
---                 },
---                 settings = {
---                     java = {
---                         saveActions = { organizeImports = true },
---                         import = { exclusions = "target/*" },
---                     }
---                 },
---                 root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
---             })
---         end,
---     })
--- end
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = "java",
+        group = vim.api.nvim_create_augroup('JdtlsAttach', {}),
+        callback = function(_)
+            require("jdtls").start_or_attach({
+                cmd = {
+                    jdtls_mason_path,
+                    "-configuration", config_dir,
+                    "-data", workspace_dir,
+                    "--jvm-arg=-javaagent:/usr/share/java/lombok/lombok.jar"
+                },
+                settings = {
+                    java = {
+                        saveActions = { organizeImports = true },
+                        import = { exclusions = "target/*" },
+                    }
+                },
+                root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
+            })
+        end,
+    })
+end
 
 local CMP_ELLIPSIS_CHAR = '…'
 local CMP_ABBR_LENGTH = 25
@@ -285,11 +285,11 @@ return {
             }
         }
     },
-    -- {
-    --     "mfussenegger/nvim-jdtls",
-    --     dependencies = { "nvim-lspconfig" },
-    --     lazy = true,
-    --     ft = "java",
-    --     config = jdtls_config,
-    -- },
+    {
+        "mfussenegger/nvim-jdtls",
+        dependencies = { "nvim-lspconfig" },
+        lazy = true,
+        ft = "java",
+        config = jdtls_config,
+    },
 }
