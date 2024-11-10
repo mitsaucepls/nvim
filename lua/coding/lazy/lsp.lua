@@ -86,6 +86,7 @@ local function nvim_lsp_config()
     lspconfig.jdtls.setup { }
     lspconfig.jdtls.setup({})
     lspconfig.lemminx.setup { }
+    lspconfig.tailwindcss.setup { }
 
     vim.diagnostic.config({
         update_in_insert = true,
