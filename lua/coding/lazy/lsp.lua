@@ -84,9 +84,15 @@ local function nvim_lsp_config()
     local lspconfig = require('lspconfig')
     lspconfig.dartls.setup { }
     lspconfig.jdtls.setup { }
-    lspconfig.jdtls.setup({})
     lspconfig.lemminx.setup { }
-    lspconfig.tailwindcss.setup { }
+    lspconfig.gdscript.setup {
+        capabilities = vim.tbl_deep_extend(
+            "force",
+            {},
+            vim.lsp.protocol.make_client_capabilities(),
+            require("cmp_nvim_lsp").default_capabilities()
+        )
+    }
 
     vim.diagnostic.config({
         update_in_insert = true,
