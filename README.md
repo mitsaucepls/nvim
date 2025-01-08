@@ -1,2 +1,4 @@
-# Quick Notes
-When installing the new lazy shit, dont forget to delete packer_compiled and do find ~/.local -type d -name packer | xargs -I {} rm -rf {}
+# My nvim setup
+
+## Markdown Preview
+On new installations it does not work. You have to go into the plugin directory and execute `npm install` yourself
