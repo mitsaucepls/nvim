@@ -1,57 +1,44 @@
 return {
     {
-        "rcarriga/nvim-dap-ui",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-            "nvim-neotest/nvim-nio",
-        },
-        config = function(_, opts)
-            local dapui = require("dapui")
-            local dap = require("dap")
-            dapui.setup()
-            dap.listeners.after.event_initialized["dapui_config"] = function()
-                dapui.open()
-            end
-            dap.listeners.before.event_terminated["dapui_config"] = function()
-                dapui.close()
-            end
-            dap.listeners.before.event_exited["dapui_config"] = function()
-                dapui.close()
-            end
-
-            vim.api.nvim_set_keymap("n", "<leader>@t", "<CMD> lua require('dapui').toggle() <CR>", {noremap=true})
-            vim.api.nvim_set_keymap("n", "<leader>@b", "<CMD> DapToggleBreakpoint <CR>", {noremap=true})
-            vim.api.nvim_set_keymap("n", "<leader>@c", "<CMD> DapContinue<CR>", {noremap=true})
-            vim.api.nvim_set_keymap("n", "<leader>@r", "<CMD> lua require('dapui').open({reset = true})<CR>", {noremap=true})
-        end,
-    },
-    {
         "mfussenegger/nvim-dap",
-    },
-    {
-        "theHamsta/nvim-dap-virtual-text",
-    },
-    {
-        "mfussenegger/nvim-dap-python",
-        ft = "python",
         dependencies = {
-            "mfussenegger/nvim-dap",
-            "rcarriga/nvim-dap-ui",
+          "leoluz/nvim-dap-go",
+          "rcarriga/nvim-dap-ui",
+          "theHamsta/nvim-dap-virtual-text",
+          "nvim-neotest/nvim-nio",
+          "williamboman/mason.nvim",
         },
-        config = function(_, opts)
-            local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
-            require("dap-python").setup(path)
-        end,
-    },
-    {
-        "leoluz/nvim-dap-go",
-        ft = "go",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-            "rcarriga/nvim-dap-ui",
-        },
-        config = function(_, opts)
+        config = function()
+            local dap = require "dap"
+            local ui = require "dapui"
+
+            require("dapui").setup()
             require("dap-go").setup()
+
+            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
+            vim.keymap.set("n", "<leader>gb", dap.run_to_cursor)
+            vim.keymap.set("n", "<leader>?", function()
+                require("dapui").eval(nil, { enter = true })
+            end)
+            vim.keymap.set("n", "<F1>", dap.continue)
+            vim.keymap.set("n", "<F2>", dap.step_into)
+            vim.keymap.set("n", "<F3>", dap.step_over)
+            vim.keymap.set("n", "<F4>", dap.step_out)
+            vim.keymap.set("n", "<F5>", dap.step_back)
+            vim.keymap.set("n", "<F13>", dap.restart)
+
+            dap.listeners.before.attach.dapui_config = function()
+                ui.open()
+            end
+            dap.listeners.before.launch.dapui_config = function()
+                ui.open()
+            end
+            dap.listeners.before.event_terminated.dapui_config = function()
+                ui.close()
+            end
+            dap.listeners.before.event_exited.dapui_config = function()
+                ui.close()
+            end
         end,
     },
 }

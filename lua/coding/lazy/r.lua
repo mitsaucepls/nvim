@@ -4,7 +4,7 @@ return {
     lazy = false,
     opts = {
         R_args = { "--quiet" },
-        external_term = "tmux split-window -h -l 40",
+        external_term = "tmux split-window -v -l 40",
         auto_quit = true,
     },
     keys = {
