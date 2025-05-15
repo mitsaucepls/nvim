@@ -1,14 +1,10 @@
 local function nvim_lsp_config()
-    require('java').setup()
+    -- require('java').setup()
     vim.filetype.add({ extension = { templ = "templ" } })
 
     require("mason-lspconfig").setup({
         ensure_installed = {
             "lua_ls",
-            "rust_analyzer",
-            "ts_ls",
-            "gopls",
-            "pyright",
         },
         handlers = {
             function(server_name)
@@ -32,13 +28,6 @@ local function nvim_lsp_config()
                             runtime = { version = 'LuaJIT' },
                             workspace = {
                                 checkThirdParty = false,
-                                -- library = {
-                                --     vim.env.VIMRUNTIME
-                                --     -- "${3rd}/luv/library"
-                                --     -- "${3rd}/busted/library",
-                                -- }
-                                -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-                                library = vim.api.nvim_get_runtime_file("", true)
                             },
                             diagnostics = {
                                 globals = { "vim", "silent", "on_attach" },
@@ -81,18 +70,32 @@ local function nvim_lsp_config()
         }
     })
 
+    local capabilities = vim.tbl_deep_extend(
+        "force",
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities()
+    )
     local lspconfig = require('lspconfig')
-    lspconfig.dartls.setup { }
-    lspconfig.jdtls.setup { }
-    lspconfig.lemminx.setup { }
-    lspconfig.gdscript.setup {
-        capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            require("cmp_nvim_lsp").default_capabilities()
-        )
+    lspconfig.dartls.setup { capabilities = capabilities }
+    lspconfig.jdtls.setup { capabilities = capabilities }
+    lspconfig.lemminx.setup { capabilities = capabilities }
+    lspconfig.ts_ls.setup {
+        capabilities = capabilities,
+        init_options = {
+            plugins = {
+                {
+                    name = "@vue/typescript-plugin",
+                    location = "/usr/lib/node_modules/@vue/typescript-plugin",
+                    languages = { "vue" },
+                },
+            },
+        },
+        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
     }
+    lspconfig.vue_language_server.setup { capabilities = capabilities }
+
+    lspconfig.gdscript.setup { capabilities = capabilities }
 
     vim.diagnostic.config({
         update_in_insert = true,
@@ -166,12 +169,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 return {
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         name = "mason",
         config = true,
     },
     {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
         name = "mason-lspconfig",
         dependencies = { "mason" },
         config = true,
@@ -185,7 +188,8 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            "williamboman/mason-lspconfig.nvim",
+            "mason-org/mason-lspconfig.nvim",
+            "mason-org/mason-registry",
             "j-hui/fidget.nvim",
         },
         config = nvim_lsp_config
@@ -200,7 +204,7 @@ return {
             }
         }
     },
-    {
-        "nvim-java/nvim-java"
-    },
+    -- {
+    --     "nvim-java/nvim-java"
+    -- },
 }
