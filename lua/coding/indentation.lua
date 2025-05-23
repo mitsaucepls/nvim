@@ -10,3 +10,13 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.expandtab = false
     end
 })
+vim.api.nvim_create_augroup("TrimWhitespace", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = "TrimWhitespace",
+  pattern = "*",
+  callback = function()
+    if vim.bo.filetype ~= "markdown" then
+      vim.cmd([[%s/\s\+$//e]])
+    end
+  end,
+})

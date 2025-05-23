@@ -3,9 +3,6 @@ require("coding.set")
 require("coding.indentation")
 require("coding.godot")
 require("coding.lazy_init")
--- windows only
--- require("coding.config")
-
 
 local augroup = vim.api.nvim_create_augroup
 local CodingGroup = augroup('Coding', {})
@@ -32,12 +29,6 @@ autocmd('TextYankPost', {
             timeout = 40,
         })
     end
-})
-
-autocmd({"BufWritePre"}, {
-    group = CodingGroup,
-    pattern = "*",
-    command = [[%s/\s\+$//e]],
 })
 
 vim.g.netrw_browse_split = 0
