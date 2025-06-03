@@ -307,6 +307,7 @@ return {
         templ = true,
         taplo = true,
         intelephense = true,
+        r_language_server = true,
 
         pyright = {
           autoImportCompletion = true,
