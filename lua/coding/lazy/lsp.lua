@@ -308,7 +308,10 @@ return {
         taplo = true,
         intelephense = true,
         r_language_server = true,
-
+        texlab = true,
+        -- needs rubocop or sorbet installed idk it works now
+        ruby_lsp = true,
+        -- sorbet = true,
         pyright = {
           autoImportCompletion = true,
           settings = {
@@ -328,18 +331,35 @@ return {
 
         -- Enabled biome formatting, turn off all the other ones generally
         biome = true,
-        -- ts_ls = {
-        --   root_dir = require("lspconfig").util.root_pattern "package.json",
-        --   single_file = false,
+        ts_ls = {
+          init_options = {
+            plugins = {
+              {
+                name = "@vue/typescript-plugin",
+                location = "/usr/lib/node_modules/@vue/typescript-plugin",
+                languages = {"javascript", "typescript", "vue"},
+              },
+            },
+          },
+          filetypes = {
+            "javascript",
+            "typescript",
+            "vue",
+          },
+        },
+        vue_ls = {
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+          init_options = {
+            vue = {
+              hybridMode = false,
+            },
+          },
+        },
+        -- vtsls = {
         --   server_capabilities = {
         --     documentFormattingProvider = false,
         --   },
         -- },
-        vtsls = {
-          server_capabilities = {
-            documentFormattingProvider = false,
-          },
-        },
         -- denols = true,
         jsonls = {
           server_capabilities = {
@@ -503,7 +523,7 @@ return {
           vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
           vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
 
-          vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, { buffer = 0 })
+          vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, { buffer = 0 })
           vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
           vim.keymap.set("n", "<space>wd", builtin.lsp_document_symbols, { buffer = 0 })
 
