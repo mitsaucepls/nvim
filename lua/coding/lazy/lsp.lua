@@ -297,11 +297,7 @@ return {
             },
           },
         },
-        lua_ls = {
-          server_capabilities = {
-            semanticTokensProvider = vim.NIL,
-          },
-        },
+        lua_ls = true,
         rust_analyzer = true,
         svelte = true,
         templ = true,
@@ -390,7 +386,7 @@ return {
             },
           },
         },
-
+        helm_ls = true,
         ols = {},
         racket_langserver = { manual_install = true },
         roc_ls = { manual_install = true },

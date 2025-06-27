@@ -18,7 +18,8 @@ return {
             builtin.grep_string({ search = word })
         end)
         vim.keymap.set('n', '<leader>ps', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
+            -- { search = vim.fn.input("Grep > ") }
+            builtin.live_grep()
         end)
         vim.keymap.set('n', ',<leader>vh', builtin.help_tags, {})
     end
