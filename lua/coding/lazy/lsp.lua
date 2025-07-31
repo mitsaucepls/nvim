@@ -386,7 +386,11 @@ return {
             },
           },
         },
-        helm_ls = true,
+        helm_ls = {
+          yamlls = {
+            path = "yaml-language-server",
+          }
+        },
         ols = {},
         racket_langserver = { manual_install = true },
         roc_ls = { manual_install = true },
@@ -557,4 +561,5 @@ return {
       end, { desc = "Toggle lsp_lines" })
     end,
   },
+  { "qvalentin/helm-ls.nvim", ft = "helm" },
 }

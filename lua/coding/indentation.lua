@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "r,html,javascript,typescript,json,css,scss,vue,dart,yaml,markdown,typescriptreact,nix,terraform,lua,bib,tex,sh",
+  pattern = "r,html,javascript,typescript,json,css,scss,vue,dart,markdown,typescriptreact,nix,terraform,lua,bib,tex,sh,helm,yaml",
   command = "setlocal shiftwidth=2 tabstop=2"
 })
 vim.api.nvim_create_autocmd("FileType", {
@@ -19,4 +19,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
       vim.cmd([[%s/\s\+$//e]])
     end
   end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "plaintex,tex",
+    callback = function()
+        vim.bo.textwidth = 100
+    end,
 })
