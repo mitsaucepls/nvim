@@ -327,36 +327,26 @@ return {
 
         -- Enabled biome formatting, turn off all the other ones generally
         biome = true,
-        ts_ls = {
-          init_options = {
-            plugins = {
-              {
-                name = "@vue/typescript-plugin",
-                location = "/usr/lib/node_modules/@vue/typescript-plugin",
-                languages = {"javascript", "typescript", "vue"},
+
+        vtsls = {
+          settings = {
+            vtsls = {
+              tsserver = {
+                globalPlugins = {
+                  {
+                    name = '@vue/typescript-plugin',
+                    location = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                    languages = { 'vue' },
+                    configNamespace = 'typescript',
+                  }
+                },
               },
             },
           },
-          filetypes = {
-            "javascript",
-            "typescript",
-            "vue",
-          },
-        },
-        vue_ls = {
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-          init_options = {
-            vue = {
-              hybridMode = false,
-            },
-          },
         },
-        -- vtsls = {
-        --   server_capabilities = {
-        --     documentFormattingProvider = false,
-        --   },
-        -- },
-        -- denols = true,
+        ts_ls = true,
+        vue_ls = true,
         jsonls = {
           server_capabilities = {
             documentFormattingProvider = false,
