@@ -227,6 +227,11 @@ return {
         },
       },
       { "Bilal2453/luvit-meta", lazy = true },
+      {
+        'mrcjkb/rustaceanvim',
+        version = '^6', -- Recommended
+        lazy = false, -- This plugin is already lazy
+      },
       "mason-org/mason.nvim",
       "mason-org/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -298,7 +303,6 @@ return {
           },
         },
         lua_ls = true,
-        rust_analyzer = true,
         svelte = true,
         templ = true,
         taplo = true,
