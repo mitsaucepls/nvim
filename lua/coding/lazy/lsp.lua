@@ -254,35 +254,12 @@ return {
         return
       end
 
-      local extend = function(name, key, values)
-        local mod = require(string.format("lspconfig.configs.%s", name))
-        local default = mod.default_config
-        local keys = vim.split(key, ".", { plain = true })
-        while #keys > 0 do
-          local item = table.remove(keys, 1)
-          default = default[item]
-        end
-
-        if vim.islist(default) then
-          for _, value in ipairs(default) do
-            table.insert(values, value)
-          end
-        else
-          for item, value in pairs(default) do
-            if not vim.tbl_contains(values, item) then
-              values[item] = value
-            end
-          end
-        end
-        return values
-      end
-
       local capabilities = nil
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
       end
 
-      local lspconfig = require "lspconfig"
+      -- local lspconfig = require "lspconfig"
 
       local servers = {
         bashls = true,
@@ -350,7 +327,6 @@ return {
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
         ts_ls = true,
-        vue_ls = true,
         jsonls = {
           server_capabilities = {
             documentFormattingProvider = false,
@@ -436,29 +412,7 @@ return {
           filetypes = { "c" },
         },
 
-        tailwindcss = {
-          init_options = {
-            userLanguages = {
-              elixir = "phoenix-heex",
-              eruby = "erb",
-              heex = "phoenix-heex",
-            },
-          },
-          filetypes = extend("tailwindcss", "filetypes", { "ocaml.mlx" }),
-          settings = {
-            tailwindCSS = {
-              experimental = {
-                classRegex = {
-                  [[class: "([^"]*)]],
-                  [[className="([^"]*)]],
-                },
-              },
-              includeLanguages = extend("tailwindcss", "settings.tailwindCSS.includeLanguages", {
-                ["ocaml.mlx"] = "html",
-              }),
-            },
-          },
-        },
+        tailwindcss = true,
       }
 
       -- require("ocaml").setup()
@@ -491,7 +445,13 @@ return {
           capabilities = capabilities,
         }, config)
 
-        lspconfig[name].setup(config)
+        -- lspconfig[name].setup(config)
+        vim.lsp.config(name, {
+          settings = {
+            [name] = config,
+          },
+        })
+        vim.lsp.enable(name)
       end
 
       local disable_semantic_tokens = {
