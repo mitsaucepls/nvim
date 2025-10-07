@@ -307,6 +307,7 @@ return {
         templ = true,
         taplo = true,
         intelephense = true,
+        -- rust_analyzer = true,
         r_language_server = true,
         texlab = true,
         -- needs rubocop or sorbet installed idk it works now
