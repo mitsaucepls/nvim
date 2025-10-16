@@ -117,6 +117,7 @@ return {
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
         vue_ls = true,
+        -- angularls = true,
         -- ts_ls = true,
         jsonls = {
           server_capabilities = {
