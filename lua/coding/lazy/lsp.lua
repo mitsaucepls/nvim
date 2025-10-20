@@ -117,6 +117,7 @@ return {
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
         vue_ls = true,
+        eslint = true,
         -- ts_ls = true,
         jsonls = {
           server_capabilities = {
@@ -156,42 +157,8 @@ return {
         racket_langserver = { manual_install = true },
         roc_ls = { manual_install = true },
 
-        -- ocamllsp = {
-        --   manual_install = true,
-        --   cmd = { "dune", "tools", "exec", "ocamllsp" },
-        --   -- cmd = { "dune", "exec", "ocamllsp" },
-        --   settings = {
-        --     codelens = { enable = true },
-        --     inlayHints = { enable = true },
-        --     syntaxDocumentation = { enable = true },
-        --   },
-
-        --   server_capabilities = { semanticTokensProvider = false },
-
-        --   -- TODO: Check if i still need the filtypes stuff i had before
-        -- },
-
         gleam = {
           manual_install = true,
-        },
-
-        -- elixirls = {
-        --   cmd = { "/home/tjdevries/.local/share/nvim/mason/bin/elixir-ls" },
-        --   root_dir = require("lspconfig.util").root_pattern { "mix.exs" },
-        --   -- server_capabilities = {
-        --   --   -- completionProvider = true,
-        --   --   definitionProvider = true,
-        --   --   documentFormattingProvider = false,
-        --   -- },
-        -- },
-
-        lexical = {
-          cmd = { "/home/tjdevries/.local/share/nvim/mason/bin/lexical", "server" },
-          root_dir = require("lspconfig.util").root_pattern { "mix.exs" },
-          server_capabilities = {
-            completionProvider = vim.NIL,
-            definitionProvider = true,
-          },
         },
 
         clangd = {
@@ -205,8 +172,6 @@ return {
 
         tailwindcss = true,
       }
-
-      -- require("ocaml").setup()
 
       local servers_to_install = vim.tbl_filter(function(key)
         local t = servers[key]
