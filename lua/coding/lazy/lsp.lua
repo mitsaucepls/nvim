@@ -118,6 +118,7 @@ return {
         },
         vue_ls = true,
         eslint = true,
+        -- angularls = true,
         -- ts_ls = true,
         jsonls = {
           server_capabilities = {
