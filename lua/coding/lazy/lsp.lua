@@ -158,6 +158,7 @@ return {
           }
         },
         ruff = { manual_install = true },
+        vacuum = { manual_install = true },
         -- mojo = { manual_install = true },
 
         -- Enabled biome formatting, turn off all the other ones generally
