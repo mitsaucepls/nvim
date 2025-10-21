@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "r,html,javascript,typescript,json,css,scss,vue,dart,markdown,typescriptreact,nix,terraform,lua,bib,tex,sh,helm,yaml,hyprlang",
+  pattern = "r,html,javascript,typescript,json,css,scss,vue,dart,markdown,typescriptreact,nix,terraform,lua,bib,tex,sh,helm,yaml,hyprlang,xml",
   command = "setlocal shiftwidth=2 tabstop=2"
 })
 vim.api.nvim_create_autocmd("FileType", {

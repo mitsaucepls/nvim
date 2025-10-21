@@ -10,22 +10,86 @@ return {
         opts = {
           library = {
             -- Load luvit types when the `vim.uv` word is found
-            { path = "luvit-meta/library", words = { "vim%.uv" } },
+            { path = "luvit-meta/library",      words = { "vim%.uv" } },
             { path = "/usr/share/awesome/lib/", words = { "awesome" } },
           },
         },
       },
-      { "Bilal2453/luvit-meta", lazy = true },
+      { "Bilal2453/luvit-meta",                        lazy = true },
+      {
+        "mfussenegger/nvim-jdtls",
+        opts = {
+          flags = {
+            allow_incremental_sync = false,
+          },
+          settings = {
+            java = {
+              configuration = {
+                runtimes = {
+                  {
+                    name = "JavaSE-11",
+                    path = "/usr/lib/jvm/java-11-openjdk/",
+                  },
+                  {
+                    name = "JavaSE-17",
+                    path = "/usr/lib/jvm/java-17-openjdk/",
+                  },
+                  {
+                    name = "JavaSE-21",
+                    path = "/usr/lib/jvm/java-21-openjdk/",
+                  },
+                  {
+                    name = "JavaSE-25",
+                    path = "/usr/lib/jvm/java-25-openjdk/",
+                    default = true,
+                  },
+                }
+              }
+            }
+          }
+        },
+        config = function(_, opts)
+          local bundles = {
+            vim.fn.glob(
+              vim.fn.stdpath("data") ..
+              "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true
+            ),
+          }
+          local java_test_bundles = vim.split(
+            vim.fn.glob(
+              vim.fn.stdpath("data") ..
+              "/mason/packages/java-test/extension/server/*.jar", true
+            ), "\n"
+          )
+          local excluded = {
+            "com.microsoft.java.test.runner-jar-with-dependencies.jar",
+            "jacocoagent.jar",
+          }
+          for _, java_test_jar in ipairs(java_test_bundles) do
+            local fname = vim.fn.fnamemodify(java_test_jar, ":t")
+            if not vim.tbl_contains(excluded, fname) then
+              table.insert(bundles, java_test_jar)
+            end
+          end
+
+          opts.init_options = {
+            bundles = bundles
+          }
+
+          vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
+          vim.lsp.config("jdtls", opts)
+        end,
+      },
       {
         'mrcjkb/rustaceanvim',
         version = '^6', -- Recommended
-        lazy = false, -- This plugin is already lazy
+        lazy = false,   -- This plugin is already lazy
       },
       "mason-org/mason.nvim",
       "mason-org/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
 
-      { "j-hui/fidget.nvim", opts = {} },
+      { "j-hui/fidget.nvim",                           opts = {} },
       { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
 
       { "elixir-tools/elixir-tools.nvim" },
@@ -98,6 +162,7 @@ return {
 
         -- Enabled biome formatting, turn off all the other ones generally
         biome = true,
+        jdtls = true,
 
         vtsls = {
           settings = {
@@ -106,7 +171,8 @@ return {
                 globalPlugins = {
                   {
                     name = '@vue/typescript-plugin',
-                    location = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                    location = vim.fn.stdpath("data") ..
+                    "/mason/packages/vue-language-server/node_modules/@vue/language-server",
                     languages = { 'vue' },
                     configNamespace = 'typescript',
                   }
@@ -155,12 +221,12 @@ return {
           }
         },
         ols = {},
-        racket_langserver = { manual_install = true },
-        roc_ls = { manual_install = true },
+        -- racket_langserver = { manual_install = true },
+        -- roc_ls = { manual_install = true },
 
-        gleam = {
-          manual_install = true,
-        },
+        -- gleam = {
+        --   manual_install = true,
+        -- },
 
         clangd = {
           -- cmd = { "clangd", unpack(require("custom.clangd").flags) },
