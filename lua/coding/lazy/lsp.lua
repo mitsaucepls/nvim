@@ -212,7 +212,16 @@ return {
                 enable = false,
                 url = "",
               },
-              -- schemas = require("schemastore").yaml.schemas(),
+              schemas = {
+                ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
+                  ".gitlab-ci.yml",
+                  ".gitlab-ci.yaml",
+                },
+                ["https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/HEAD/configuration-schema.json"] = {
+                  "oapi.yml",
+                  "oapi.yaml",
+                },
+              }
             },
           },
         },
