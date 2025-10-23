@@ -218,8 +218,10 @@ return {
                   ".gitlab-ci.yaml",
                 },
                 ["https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/HEAD/configuration-schema.json"] = {
-                  "oapi.yml",
                   "oapi.yaml",
+                  "oapi.yml",
+                  "oapi-*.yaml",
+                  "oapi-*.yml",
                 },
                 ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
                 ["../path/relative/to/file.yml"] = "/.github/workflows/*",
