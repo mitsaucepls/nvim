@@ -221,6 +221,11 @@ return {
                   "oapi.yml",
                   "oapi.yaml",
                 },
+                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                ["../path/relative/to/file.yml"] = "/.github/workflows/*",
+                ["/path/from/root/of/project"] = "/.github/workflows/*",
+                -- Mind the k8s version
+                ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.1-standalone-strict/all.json"] = "/*.k8s.yaml",
               }
             },
           },
