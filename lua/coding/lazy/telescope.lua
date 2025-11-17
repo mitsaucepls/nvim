@@ -13,7 +13,13 @@ return {
 
       telescope.setup({
         defaults = {
-          path_display = { truncate = 3 },
+          path_display = {
+            "truncate",
+            shorten = {
+              len = 4,
+              exclude = { -2, -1 }
+            }
+          },
         },
       })
 
