@@ -138,10 +138,10 @@ return {
         taplo = true,
         intelephense = true,
         -- rust_analyzer = true,
-        r_language_server = true,
+        -- r_language_server = true,
         texlab = true,
         -- needs rubocop or sorbet installed idk it works now
-        ruby_lsp = true,
+        -- ruby_lsp = true,
         -- sorbet = true,
         pyright = {
           autoImportCompletion = true,
