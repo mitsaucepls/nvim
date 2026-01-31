@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "r,html,javascript,typescript,json,css,scss,vue,dart,markdown,typescriptreact,nix,terraform,lua,bib,tex,sh,helm,yaml,hyprlang,xml,zsh,bash",
+  pattern = "r,html,javascript,typescript,json,css,scss,vue,dart,markdown,typescriptreact,nix,terraform,lua,bib,tex,sh,helm,yaml,hyprlang,xml,zsh,bash,jsonc",
   command = "setlocal shiftwidth=2 tabstop=2"
 })
 vim.api.nvim_create_autocmd("FileType", {
@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = "TrimWhitespace",
   pattern = "*",
   callback = function()
-    if vim.bo.filetype ~= "markdown" then
+    if vim.bo.filetype ~= "markdown" and vim.bo.filetype ~= "text" then
       vim.cmd([[%s/\s\+$//e]])
     end
   end,

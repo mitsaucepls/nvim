@@ -1,7 +1,7 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
-    branch = "0.1.x",
+    branch = "master",
     dependencies = {
       "nvim-lua/plenary.nvim",
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -13,6 +13,9 @@ return {
 
       telescope.setup({
         defaults = {
+          preview = {
+            treesitter = false,
+          },
           path_display = {
             "truncate",
             shorten = {
