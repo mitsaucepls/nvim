@@ -132,6 +132,7 @@ return {
             },
           },
         },
+        golangci_lint_ls = true,
         lua_ls = true,
         svelte = true,
         templ = true,
@@ -256,6 +257,7 @@ return {
         },
 
         tailwindcss = true,
+        postgres_lsp = true,
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
