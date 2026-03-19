@@ -44,7 +44,21 @@ return {
                     default = true,
                   },
                 }
-              }
+              },
+              format = {
+                settings = {
+                  url = 'https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml',
+
+                  profile = 'GoogleStyle',
+                }
+              },
+              inlayHints = {
+                parameterNames = {
+                  enabled = "all",
+                }
+              },
+
+              telemetry = false,
             }
           }
         },
