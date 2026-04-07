@@ -49,7 +49,7 @@ vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
 
 vim.api.nvim_command('autocmd TextYankPost * silent! lua vim.highlight.on_yank()')
 
-vim.api.nvim_create_user_command('LspLog', 'e ' .. vim.lsp.log.get_filename(), {})
+vim.api.nvim_create_user_command('LspLog', 'tabedit ' .. vim.lsp.log.get_filename(), {})
 vim.api.nvim_create_user_command('LspInfo', "checkhealth vim.lsp", {})
 
 vim.api.nvim_set_keymap('n', '<C-c>', '<C-a>', {noremap = true, silent = true})
