@@ -1,7 +1,8 @@
 return {
   {
-    "neovim/nvim-lspconfig",
+    "mason-org/mason.nvim",
     dependencies = {
+      { "neovim/nvim-lspconfig" },
       {
         -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
         -- used for completion, annotations and signatures of Neovim apis
@@ -134,6 +135,7 @@ return {
           -- manual_install = true,
           settings = {
             gopls = {
+              buildFlags = { "-tags=unit,integration" },
               hints = {
                 assignVariableTypes = true,
                 compositeLiteralFields = true,
@@ -222,6 +224,7 @@ return {
         -- },
 
         yamlls = {
+          single_file_support = true,
           settings = {
             yaml = {
               schemaStore = {
@@ -240,8 +243,6 @@ return {
                   "oapi-*.yml",
                 },
                 ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-                ["../path/relative/to/file.yml"] = "/.github/workflows/*",
-                ["/path/from/root/of/project"] = "/.github/workflows/*",
                 -- Mind the k8s version
                 ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.1-standalone-strict/all.json"] = "/*.k8s.yaml",
               }
@@ -249,9 +250,13 @@ return {
           },
         },
         helm_ls = {
-          yamlls = {
-            path = "yaml-language-server",
-          }
+          settings = {
+            ["helm-ls"] = {
+              yamlls = {
+                path = "yaml-language-server",
+              },
+            },
+          },
         },
         ols = {},
         -- racket_langserver = { manual_install = true },
