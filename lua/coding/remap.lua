@@ -46,6 +46,7 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+vim.keymap.set("n", "<leader>ct", "<cmd>checktime<CR>")
 
 vim.api.nvim_command('autocmd TextYankPost * silent! lua vim.highlight.on_yank()')
 
