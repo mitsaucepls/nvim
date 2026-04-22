@@ -16,7 +16,7 @@ return {
           },
         },
       },
-      { "Bilal2453/luvit-meta",                        lazy = true },
+      { "Bilal2453/luvit-meta", lazy = true },
       {
         "mfussenegger/nvim-jdtls",
         opts = {
@@ -27,18 +27,6 @@ return {
             java = {
               configuration = {
                 runtimes = {
-                  {
-                    name = "JavaSE-11",
-                    path = "/usr/lib/jvm/java-11-openjdk/",
-                  },
-                  {
-                    name = "JavaSE-17",
-                    path = "/usr/lib/jvm/java-17-openjdk/",
-                  },
-                  {
-                    name = "JavaSE-21",
-                    path = "/usr/lib/jvm/java-21-openjdk/",
-                  },
                   {
                     name = "JavaSE-25",
                     path = "/usr/lib/jvm/java-25-openjdk/",
@@ -58,7 +46,6 @@ return {
                   enabled = "all",
                 }
               },
-
               telemetry = false,
             }
           }
